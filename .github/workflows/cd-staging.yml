@@ -1,0 +1,123 @@
+# ============================================================
+# CD Pipeline — STAGING / QA Environment
+# Trigger: push to `release/**` branches
+# Deploys to: Render.com Staging service
+# ============================================================
+name: CD — Deploy to Staging (QA)
+
+on:
+  push:
+    branches:
+      - "release/**"
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: true
+
+jobs:
+  deploy-staging:
+    name: Deploy → Staging / QA
+    runs-on: ubuntu-latest
+    environment: staging   # GitHub Environment with protected secrets
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract release version
+        id: version
+        run: |
+          # e.g. release/v1.2.0  →  v1.2.0
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#release/}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Release version: $VERSION"
+
+      # ── Build & Push Docker image ──
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image (Staging)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/cs-dept-website:staging-latest
+            ${{ secrets.DOCKER_USERNAME }}/cs-dept-website:staging-${{ steps.version.outputs.version }}
+            ${{ secrets.DOCKER_USERNAME }}/cs-dept-website:staging-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # ── QA Smoke Tests (basic) ──
+      - name: Run QA smoke test on image
+        run: |
+          docker run -d --name qa-test -p 8081:80 \
+            ${{ secrets.DOCKER_USERNAME }}/cs-dept-website:staging-latest
+          sleep 5
+
+          echo "=== QA Smoke Tests ==="
+          FAIL=0
+          for page in "" "index.html" "courses.html" "faculty.html" "admissions.html" "contact.html"; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:8081/$page")
+            if [ "$STATUS" -ne 200 ]; then
+              echo "  ❌ FAIL /$page → HTTP $STATUS"
+              FAIL=1
+            else
+              echo "  ✅ PASS /$page → HTTP $STATUS"
+            fi
+          done
+
+          docker stop qa-test && docker rm qa-test
+
+          if [ "$FAIL" -eq 1 ]; then
+            echo "❌ QA smoke tests failed — deployment cancelled."
+            exit 1
+          fi
+          echo "✅ All QA smoke tests passed."
+
+      # ── Trigger Render.com Staging Deployment ──
+      - name: Trigger Render Deploy Hook (Staging)
+        run: |
+          echo "Triggering deployment to Staging environment..."
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST \
+            "${{ secrets.RENDER_DEPLOY_HOOK_STAGING }}")
+          echo "Render API response: HTTP $RESPONSE"
+          if [ "$RESPONSE" -ne 200 ] && [ "$RESPONSE" -ne 201 ]; then
+            echo "❌ Render deploy hook failed with HTTP $RESPONSE"
+            exit 1
+          fi
+          echo "✅ Deployment triggered successfully"
+
+      - name: Wait for Staging deployment to stabilize
+        run: sleep 60
+
+      - name: Verify Staging URL is live
+        run: |
+          URL="${{ secrets.STAGING_SITE_URL }}"
+          echo "Checking $URL ..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL" || echo "000")
+          echo "HTTP Status: $STATUS"
+          if [ "$STATUS" -eq 200 ]; then
+            echo "✅ Staging site is live!"
+          else
+            echo "⚠️  Site returned HTTP $STATUS — may still be deploying."
+          fi
+
+      - name: Deployment summary
+        run: |
+          echo "========================================="
+          echo " Deployed to: STAGING / QA"
+          echo " URL        : ${{ secrets.STAGING_SITE_URL }}"
+          echo " Version    : ${{ steps.version.outputs.version }}"
+          echo " Image      : staging-${{ steps.version.outputs.version }}"
+          echo " Branch     : ${{ github.ref_name }}"
+          echo " Time       : $(date -u)"
+          echo "========================================="
