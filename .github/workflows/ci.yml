@@ -1,0 +1,169 @@
+# ============================================================
+# CI Pipeline — HTML/CSS Lint & Docker Image Build
+# Triggers: push / pull_request on develop, release/*, main
+# ============================================================
+name: CI — Lint & Docker Build
+
+on:
+  push:
+    branches:
+      - develop
+      - "release/**"
+      - main
+  pull_request:
+    branches:
+      - develop
+      - "release/**"
+      - main
+
+jobs:
+  # ──────────────────────────────────────────
+  # JOB 1: HTML & CSS Linting
+  # ──────────────────────────────────────────
+  lint:
+    name: Lint HTML & CSS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install linting tools
+        run: |
+          npm install -g html-validate
+          npm install -g stylelint stylelint-config-standard
+
+      - name: Create stylelint config
+        run: |
+          cat > .stylelintrc.json <<'EOF'
+          {
+            "extends": "stylelint-config-standard",
+            "rules": {
+              "selector-class-pattern": null,
+              "no-descending-specificity": null,
+              "declaration-block-no-redundant-longhand-properties": null
+            }
+          }
+          EOF
+
+      - name: Lint HTML files
+        run: |
+          echo "=== Linting HTML files ==="
+          FAIL=0
+          for file in src/*.html; do
+            echo "Checking $file..."
+            html-validate "$file" || FAIL=1
+          done
+          if [ "$FAIL" -eq 1 ]; then
+            echo "❌ HTML validation failed!"
+            exit 1
+          fi
+          echo "✅ All HTML files passed validation."
+
+      - name: Check HTML structure (basic checks)
+        run: |
+          echo "=== Checking required pages exist ==="
+          for page in index.html courses.html faculty.html admissions.html contact.html; do
+            if [ ! -f "src/$page" ]; then
+              echo "❌ Missing required page: src/$page"
+              exit 1
+            fi
+            echo "✅ Found src/$page"
+          done
+
+      - name: Check CSS inline styles for key properties
+        run: |
+          echo "=== Checking for basic CSS variables usage ==="
+          for file in src/*.html; do
+            if grep -q "var(--" "$file"; then
+              echo "✅ CSS variables used in $file"
+            else
+              echo "⚠️  No CSS variables found in $file (warning only)"
+            fi
+          done
+
+  # ──────────────────────────────────────────
+  # JOB 2: Docker Build Validation
+  # ──────────────────────────────────────────
+  docker-build:
+    name: Docker Image Build
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image (no push — CI only)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: cs-dept-website:ci-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run container and health check
+        run: |
+          docker build -t cs-dept-website:test .
+          docker run -d --name test-container -p 8080:80 cs-dept-website:test
+          sleep 5
+
+          echo "=== Health Check ==="
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/)
+          if [ "$STATUS" -ne 200 ]; then
+            echo "❌ Health check failed — HTTP $STATUS"
+            docker logs test-container
+            exit 1
+          fi
+          echo "✅ Container responding with HTTP $STATUS"
+
+          echo "=== Checking all pages are served ==="
+          for page in index.html courses.html faculty.html admissions.html contact.html; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/$page)
+            echo "  $page → HTTP $STATUS"
+          done
+
+          docker stop test-container
+          docker rm test-container
+
+      - name: Image size report
+        run: |
+          SIZE=$(docker image inspect cs-dept-website:test --format='{{.Size}}')
+          MB=$((SIZE / 1024 / 1024))
+          echo "📦 Docker image size: ${MB} MB"
+          if [ "$MB" -gt 50 ]; then
+            echo "⚠️  Image size exceeds 50MB — consider optimization"
+          else
+            echo "✅ Image size is within acceptable limit"
+          fi
+
+  # ──────────────────────────────────────────
+  # JOB 3: CI Summary
+  # ──────────────────────────────────────────
+  ci-summary:
+    name: CI Summary
+    runs-on: ubuntu-latest
+    needs: [lint, docker-build]
+    if: always()
+
+    steps:
+      - name: Report CI status
+        run: |
+          echo "========================================="
+          echo " CI Pipeline Summary"
+          echo "========================================="
+          echo " Branch  : ${{ github.ref_name }}"
+          echo " Commit  : ${{ github.sha }}"
+          echo " Trigger : ${{ github.event_name }}"
+          echo " Lint    : ${{ needs.lint.result }}"
+          echo " Docker  : ${{ needs.docker-build.result }}"
+          echo "========================================="
