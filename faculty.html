@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faculty – CS Department COMSATS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#0a1628; --blue:#1a3a6e; --gold:#c9a84c; --gold-light:#f0d080; --cream:#faf8f3; --gray:#6b7280; --white:#ffffff; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--navy); }
+    nav { background:var(--navy); display:flex; align-items:center; justify-content:space-between; padding:0 5%; height:70px; position:sticky; top:0; z-index:100; box-shadow:0 2px 20px rgba(0,0,0,0.4); }
+    .logo { font-family:'Playfair Display',serif; color:var(--gold); font-size:1.3rem; letter-spacing:1px; }
+    .logo span { color:var(--white); font-size:0.8rem; display:block; font-family:'DM Sans',sans-serif; letter-spacing:2px; text-transform:uppercase; font-weight:300; }
+    nav ul { list-style:none; display:flex; gap:2rem; }
+    nav ul a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:0.9rem; transition:color 0.2s; }
+    nav ul a:hover, nav ul a.active { color:var(--gold); }
+
+    .page-header { background:linear-gradient(135deg,var(--navy),var(--blue)); color:white; padding:70px 5% 60px; }
+    .page-header p.tag { color:var(--gold); font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:0.8rem; }
+    .page-header h1 { font-family:'Playfair Display',serif; font-size:2.8rem; margin-bottom:1rem; }
+    .page-header p.sub { color:rgba(255,255,255,0.7); max-width:520px; line-height:1.7; }
+
+    .faculty-section { padding:70px 5%; }
+    .rank-title { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--navy); margin-bottom:1.5rem; padding-bottom:0.6rem; border-bottom:2px solid var(--gold); }
+    .faculty-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; margin-bottom:4rem; }
+
+    .faculty-card { background:var(--white); border-radius:8px; overflow:hidden; box-shadow:0 2px 12px rgba(10,22,40,0.08); border:1px solid #e8e4da; transition:transform 0.2s,box-shadow 0.2s; }
+    .faculty-card:hover { transform:translateY(-4px); box-shadow:0 10px 30px rgba(10,22,40,0.14); }
+    .card-header { background:linear-gradient(135deg,var(--navy),var(--blue)); padding:1.5rem 1.5rem 1rem; display:flex; align-items:center; gap:1rem; }
+    .avatar { width:58px; height:58px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--navy); font-weight:700; flex-shrink:0; }
+    .card-header-text h3 { color:white; font-size:1rem; margin-bottom:0.2rem; }
+    .designation { color:var(--gold); font-size:0.78rem; letter-spacing:1px; text-transform:uppercase; }
+    .card-body { padding:1.2rem 1.5rem 1.5rem; }
+    .info-row { display:flex; gap:0.6rem; margin-bottom:0.6rem; align-items:flex-start; font-size:0.87rem; }
+    .info-label { color:var(--gray); min-width:90px; font-size:0.82rem; }
+    .info-val { color:var(--navy); flex:1; line-height:1.5; }
+    .badge { display:inline-block; background:#f0ece0; color:var(--navy); padding:0.2rem 0.7rem; border-radius:20px; font-size:0.76rem; margin:2px; font-weight:500; }
+    .office-hours { background:#fdf9ee; border-left:3px solid var(--gold); padding:0.6rem 0.8rem; border-radius:0 4px 4px 0; font-size:0.85rem; margin-top:0.8rem; color:var(--navy); }
+
+    footer { background:#060d1a; color:rgba(255,255,255,0.5); padding:2.5rem 5%; text-align:center; font-size:0.85rem; }
+    footer a { color:var(--gold); text-decoration:none; }
+    @media(max-width:768px){ nav ul { gap:1rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">CS Department <span>COMSATS University Islamabad</span></div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="faculty.html" class="active">Faculty</a></li>
+    <li><a href="admissions.html">Admissions</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="tag">Meet Our Team</p>
+  <h1>Faculty Members</h1>
+  <p class="sub">Our distinguished faculty brings together decades of academic and industry expertise, dedicated to mentoring the next generation of computing professionals.</p>
+</div>
+
+<section class="faculty-section">
+
+  <h2 class="rank-title">Professors & Associate Professors</h2>
+  <div class="faculty-grid">
+
+    <div class="faculty-card">
+      <div class="card-header">
+        <div class="avatar">AK</div>
+        <div class="card-header-text">
+          <h3>Dr. Amjad Khan</h3>
+          <div class="designation">Professor &amp; Chairperson</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="info-row"><span class="info-label">Qualification</span><span class="info-val">PhD Computer Science, University of Manchester</span></div>
+        <div class="info-row"><span class="info-label">Specialization</span><span class="info-val"><span class="badge">AI &amp; ML</span><span class="badge">Data Mining</span><span class="badge">NLP</span></span></div>
+        <div class="info-row"><span class="info-label">Email</span><span class="info-val">a.khan@comsats.edu.pk</span></div>
+        <div class="office-hours">🕐 Office Hours: Mon &amp; Wed, 10:00–12:00 · Room CS-201</div>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="card-header">
+        <div class="avatar">SR</div>
+        <div class="card-header-text">
+          <h3>Dr. Sana Riaz</h3>
+          <div class="designation">Associate Professor</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="info-row"><span class="info-label">Qualification</span><span class="info-val">PhD Computer Science, TU Berlin</span></div>
+        <div class="info-row"><span class="info-label">Specialization</span><span class="info-val"><span class="badge">Cloud Computing</span><span class="badge">Distributed Systems</span></span></div>
+        <div class="info-row"><span class="info-label">Email</span><span class="info-val">s.riaz@comsats.edu.pk</span></div>
+        <div class="office-hours">🕐 Office Hours: Tue &amp; Thu, 14:00–16:00 · Room CS-205</div>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="card-header">
+        <div class="avatar">MH</div>
+        <div class="card-header-text">
+          <h3>Dr. Muhammad Hassan</h3>
+          <div class="designation">Associate Professor</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="info-row"><span class="info-label">Qualification</span><span class="info-val">PhD Software Engineering, NUST</span></div>
+        <div class="info-row"><span class="info-label">Specialization</span><span class="info-val"><span class="badge">Software Engineering</span><span class="badge">DevOps</span></span></div>
+        <div class="info-row"><span class="info-label">Email</span><span class="info-val">m.hassan@comsats.edu.pk</span></div>
+        <div class="office-hours">🕐 Office Hours: Mon, Wed, Fri, 09:00–10:00 · Room CS-301</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="rank-title">Assistant Professors</h2>
+  <div class="faculty-grid">
+
+    <div class="faculty-card">
+      <div class="card-header">
+        <div class="avatar">FS</div>
+        <div class="card-header-text">
+          <h3>Dr. Fatima Siddiqui</h3>
+          <div class="designation">Assistant Professor</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="info-row"><span class="info-label">Qualification</span><span class="info-val">PhD Cybersecurity, Loughborough University</span></div>
+        <div class="info-row"><span class="info-label">Specialization</span><span class="info-val"><span class="badge">Cybersecurity</span><span class="badge">Cryptography</span></span></div>
+        <div class="info-row"><span class="info-label">Email</span><span class="info-val">f.siddiqui@comsats.edu.pk</span></div>
+        <div class="office-hours">🕐 Office Hours: Tue &amp; Thu, 11:00–13:00 · Room CS-108</div>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="card-header">
+        <div class="avatar">UQ</div>
+        <div class="card-header-text">
+          <h3>Mr. Usman Qureshi</h3>
+          <div class="designation">Assistant Professor</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="info-row"><span class="info-label">Qualification</span><span class="info-val">MS Computer Science, FAST-NU</span></div>
+        <div class="info-row"><span class="info-label">Specialization</span><span class="info-val"><span class="badge">Web Engineering</span><span class="badge">Databases</span></span></div>
+        <div class="info-row"><span class="info-label">Email</span><span class="info-val">u.qureshi@comsats.edu.pk</span></div>
+        <div class="office-hours">🕐 Office Hours: Mon &amp; Wed, 14:00–16:00 · Room CS-114</div>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="card-header">
+        <div class="avatar">NA</div>
+        <div class="card-header-text">
+          <h3>Ms. Nadia Aslam</h3>
+          <div class="designation">Assistant Professor</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="info-row"><span class="info-label">Qualification</span><span class="info-val">MS Data Science, LUMS</span></div>
+        <div class="info-row"><span class="info-label">Specialization</span><span class="info-val"><span class="badge">Data Science</span><span class="badge">ML</span><span class="badge">Python</span></span></div>
+        <div class="info-row"><span class="info-label">Email</span><span class="info-val">n.aslam@comsats.edu.pk</span></div>
+        <div class="office-hours">🕐 Office Hours: Fri, 10:00–12:00 · Room CS-118</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="rank-title">Lecturers</h2>
+  <div class="faculty-grid">
+
+    <div class="faculty-card">
+      <div class="card-header">
+        <div class="avatar">KH</div>
+        <div class="card-header-text">
+          <h3>Mr. Khizar Hayat</h3>
+          <div class="designation">Lecturer</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="info-row"><span class="info-label">Qualification</span><span class="info-val">MS Cloud Computing, COMSATS</span></div>
+        <div class="info-row"><span class="info-label">Specialization</span><span class="info-val"><span class="badge">DevOps</span><span class="badge">Docker</span><span class="badge">CI/CD</span></span></div>
+        <div class="info-row"><span class="info-label">Email</span><span class="info-val">k.hayat@comsats.edu.pk</span></div>
+        <div class="office-hours">🕐 Office Hours: Tue &amp; Thu, 15:00–17:00 · Room CS-Lab-3</div>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="card-header">
+        <div class="avatar">ZM</div>
+        <div class="card-header-text">
+          <h3>Ms. Zara Malik</h3>
+          <div class="designation">Lecturer</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="info-row"><span class="info-label">Qualification</span><span class="info-val">MS Computer Networks, UET Lahore</span></div>
+        <div class="info-row"><span class="info-label">Specialization</span><span class="info-val"><span class="badge">Networks</span><span class="badge">IoT</span></span></div>
+        <div class="info-row"><span class="info-label">Email</span><span class="info-val">z.malik@comsats.edu.pk</span></div>
+        <div class="office-hours">🕐 Office Hours: Mon, Wed, 13:00–14:00 · Room CS-120</div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  <p>© 2025 Department of Computer Science, COMSATS University Islamabad – Lahore Campus</p>
+  <p style="margin-top:0.5rem;"><a href="contact.html">Contact Us</a> · <a href="admissions.html">Admissions</a> · <a href="courses.html">Courses</a></p>
+</footer>
+</body>
+</html>
