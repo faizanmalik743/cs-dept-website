@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses – CS Department COMSATS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#0a1628; --blue:#1a3a6e; --gold:#c9a84c; --gold-light:#f0d080; --cream:#faf8f3; --gray:#6b7280; --white:#ffffff; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--navy); }
+    nav { background:var(--navy); display:flex; align-items:center; justify-content:space-between; padding:0 5%; height:70px; position:sticky; top:0; z-index:100; box-shadow:0 2px 20px rgba(0,0,0,0.4); }
+    .logo { font-family:'Playfair Display',serif; color:var(--gold); font-size:1.3rem; letter-spacing:1px; }
+    .logo span { color:var(--white); font-size:0.8rem; display:block; font-family:'DM Sans',sans-serif; letter-spacing:2px; text-transform:uppercase; font-weight:300; }
+    nav ul { list-style:none; display:flex; gap:2rem; }
+    nav ul a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:0.9rem; letter-spacing:0.5px; transition:color 0.2s; }
+    nav ul a:hover, nav ul a.active { color:var(--gold); }
+
+    .page-header { background:linear-gradient(135deg,var(--navy),var(--blue)); color:white; padding:70px 5% 60px; }
+    .page-header p.tag { color:var(--gold); font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:0.8rem; }
+    .page-header h1 { font-family:'Playfair Display',serif; font-size:2.8rem; margin-bottom:1rem; }
+    .page-header p.sub { color:rgba(255,255,255,0.7); max-width:520px; line-height:1.7; }
+
+    .courses-section { padding:70px 5%; }
+    .semester-group { margin-bottom:3.5rem; }
+    .semester-label { display:inline-block; background:var(--navy); color:var(--gold); padding:0.4rem 1.2rem; border-radius:4px; font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; font-weight:500; margin-bottom:1.5rem; }
+    .course-table { width:100%; border-collapse:collapse; background:var(--white); border-radius:8px; overflow:hidden; box-shadow:0 2px 12px rgba(10,22,40,0.08); }
+    .course-table thead { background:var(--navy); color:var(--gold); }
+    .course-table th { padding:1rem 1.2rem; text-align:left; font-size:0.8rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:500; }
+    .course-table td { padding:1rem 1.2rem; border-bottom:1px solid #f0ece0; font-size:0.92rem; vertical-align:top; }
+    .course-table tr:last-child td { border-bottom:none; }
+    .course-table tr:hover td { background:#fdf9ee; }
+    .credit { display:inline-block; background:var(--gold); color:var(--navy); padding:0.2rem 0.6rem; border-radius:3px; font-size:0.78rem; font-weight:500; }
+    .elective { display:inline-block; background:#e8f4fd; color:#1a5276; padding:0.2rem 0.6rem; border-radius:3px; font-size:0.78rem; font-weight:500; }
+    .desc { color:var(--gray); font-size:0.87rem; line-height:1.6; margin-top:0.3rem; }
+
+    footer { background:#060d1a; color:rgba(255,255,255,0.5); padding:2.5rem 5%; text-align:center; font-size:0.85rem; }
+    footer a { color:var(--gold); text-decoration:none; }
+    @media(max-width:768px){ .course-table { font-size:0.82rem; } nav ul { gap:1rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">CS Department <span>COMSATS University Islamabad</span></div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="courses.html" class="active">Courses</a></li>
+    <li><a href="faculty.html">Faculty</a></li>
+    <li><a href="admissions.html">Admissions</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="tag">Academic Programs</p>
+  <h1>Courses Offered</h1>
+  <p class="sub">BSCS program — 4 years, 8 semesters, 130 credit hours. Comprehensive curriculum covering foundational theory through advanced specializations.</p>
+</div>
+
+<section class="courses-section">
+
+  <div class="semester-group">
+    <span class="semester-label">Semester 1 — Fall</span>
+    <table class="course-table">
+      <thead><tr><th>Course Code</th><th>Course Title</th><th>Credits</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>CS-101</td><td>Introduction to Computing</td><td><span class="credit">3+1</span></td><td><div class="desc">Fundamentals of computers, operating systems, internet, and basic programming concepts. Lab includes hands-on exercises.</div></td></tr>
+        <tr><td>CS-103</td><td>Programming Fundamentals</td><td><span class="credit">3+1</span></td><td><div class="desc">Introduction to C/C++ programming: variables, control flow, functions, arrays, and pointers.</div></td></tr>
+        <tr><td>MTH-101</td><td>Calculus & Analytical Geometry</td><td><span class="credit">3</span></td><td><div class="desc">Limits, differentiation, integration, and analytic geometry. Applications in computing.</div></td></tr>
+        <tr><td>ENG-101</td><td>Functional English</td><td><span class="credit">3</span></td><td><div class="desc">Academic reading, writing, comprehension, and communication skills development.</div></td></tr>
+        <tr><td>IS-101</td><td>Islamic Studies / Ethics</td><td><span class="credit">2</span></td><td><div class="desc">Fundamentals of Islamic teachings and professional ethics.</div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="semester-group">
+    <span class="semester-label">Semester 2 — Spring</span>
+    <table class="course-table">
+      <thead><tr><th>Course Code</th><th>Course Title</th><th>Credits</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>CS-201</td><td>Object-Oriented Programming</td><td><span class="credit">3+1</span></td><td><div class="desc">OOP concepts in C++/Java: classes, inheritance, polymorphism, encapsulation, and design principles.</div></td></tr>
+        <tr><td>CS-203</td><td>Discrete Structures</td><td><span class="credit">3</span></td><td><div class="desc">Logic, sets, relations, functions, graph theory, and combinatorics with CS applications.</div></td></tr>
+        <tr><td>MTH-201</td><td>Linear Algebra</td><td><span class="credit">3</span></td><td><div class="desc">Vectors, matrices, determinants, eigenvalues, and linear transformations.</div></td></tr>
+        <tr><td>CS-205</td><td>Digital Logic Design</td><td><span class="credit">3+1</span></td><td><div class="desc">Boolean algebra, logic gates, combinational and sequential circuits, and digital system design.</div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="semester-group">
+    <span class="semester-label">Semester 3 — Fall</span>
+    <table class="course-table">
+      <thead><tr><th>Course Code</th><th>Course Title</th><th>Credits</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>CS-301</td><td>Data Structures & Algorithms</td><td><span class="credit">3+1</span></td><td><div class="desc">Arrays, linked lists, stacks, queues, trees, graphs, sorting, and algorithm complexity analysis.</div></td></tr>
+        <tr><td>CS-303</td><td>Operating Systems</td><td><span class="credit">3+1</span></td><td><div class="desc">Process management, memory management, file systems, synchronization, and deadlock handling.</div></td></tr>
+        <tr><td>CS-305</td><td>Database Systems</td><td><span class="credit">3+1</span></td><td><div class="desc">Relational model, SQL, normalization, transactions, and database design principles.</div></td></tr>
+        <tr><td>MTH-301</td><td>Probability & Statistics</td><td><span class="credit">3</span></td><td><div class="desc">Probability theory, distributions, hypothesis testing, regression, and statistical computing.</div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="semester-group">
+    <span class="semester-label">Semester 4 — Spring</span>
+    <table class="course-table">
+      <thead><tr><th>Course Code</th><th>Course Title</th><th>Credits</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>CS-401</td><td>Computer Networks</td><td><span class="credit">3+1</span></td><td><div class="desc">OSI/TCP-IP models, routing, switching, DNS, HTTP, and network security fundamentals.</div></td></tr>
+        <tr><td>CS-403</td><td>Software Engineering</td><td><span class="credit">3</span></td><td><div class="desc">SDLC models, requirements engineering, design patterns, testing, and project management.</div></td></tr>
+        <tr><td>CS-405</td><td>Theory of Automata</td><td><span class="credit">3</span></td><td><div class="desc">Finite automata, regular expressions, context-free grammars, Turing machines, and decidability.</div></td></tr>
+        <tr><td>CS-407</td><td>Web Engineering</td><td><span class="credit">3+1</span></td><td><div class="desc">HTML5, CSS3, JavaScript, responsive design, REST APIs, and modern web frameworks.</div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="semester-group">
+    <span class="semester-label">Semester 5 & 6 — Electives Available</span>
+    <table class="course-table">
+      <thead><tr><th>Course Code</th><th>Course Title</th><th>Credits</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>CS-501</td><td>Artificial Intelligence</td><td><span class="credit">3+1</span></td><td><div class="desc">Search algorithms, knowledge representation, machine learning basics, and neural networks.</div></td></tr>
+        <tr><td>CS-503</td><td>Cloud Computing</td><td><span class="credit">3+1</span></td><td><div class="desc">IaaS/PaaS/SaaS, virtualization, containers, Kubernetes, and cloud-native deployment models.</div></td></tr>
+        <tr><td>CS-505</td><td>DevOps for Cloud Computing</td><td><span class="credit">3+1</span></td><td><div class="desc">CI/CD pipelines, Docker, GitHub Actions, Infrastructure as Code, and multi-environment deployments.</div></td></tr>
+        <tr><td>CS-507</td><td>Cybersecurity</td><td><span class="credit">3</span></td><td><div class="desc">Threats, cryptography, network security, penetration testing, and security policy.</div></td></tr>
+        <tr><td>CS-509</td><td>Machine Learning</td><td><span class="credit">3+1</span></td><td><div class="desc">Supervised/unsupervised learning, deep learning, model evaluation, and real-world applications.</div></td></tr>
+        <tr><td>CS-511</td><td>Mobile Application Development</td><td><span class="credit">3+1</span></td><td><div class="desc">Android and cross-platform mobile development using Flutter/React Native.</div></td></tr>
+        <tr><td>CS-513</td><td>Data Science & Analytics</td><td><span class="credit">3+1</span></td><td><div class="desc">Data wrangling, visualization, statistical analysis, and business intelligence with Python.</div></td></tr>
+        <tr><td>CS-515</td><td>Compiler Construction</td><td><span class="credit">3+1</span></td><td><div class="desc">Lexical analysis, parsing, semantic analysis, code generation, and optimization techniques.</div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="semester-group">
+    <span class="semester-label">Semester 7 & 8 — Final Year</span>
+    <table class="course-table">
+      <thead><tr><th>Course Code</th><th>Course Title</th><th>Credits</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>CS-601</td><td>Final Year Project I</td><td><span class="credit">3</span></td><td><div class="desc">Research proposal, literature review, system design, and prototype development.</div></td></tr>
+        <tr><td>CS-603</td><td>Final Year Project II</td><td><span class="credit">3</span></td><td><div class="desc">Implementation, testing, documentation, and final presentation of the capstone project.</div></td></tr>
+        <tr><td>CS-605</td><td>Professional Practices</td><td><span class="credit">2</span></td><td><div class="desc">Ethics, intellectual property, entrepreneurship, project management, and career readiness.</div></td></tr>
+        <tr><td>INT-601</td><td>Internship</td><td><span class="credit">3</span></td><td><div class="desc">Minimum 6-week industry internship with formal evaluation and report submission.</div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+
+<footer>
+  <p>© 2025 Department of Computer Science, COMSATS University Islamabad – Lahore Campus</p>
+  <p style="margin-top:0.5rem;"><a href="contact.html">Contact Us</a> · <a href="admissions.html">Admissions</a> · <a href="faculty.html">Faculty</a></p>
+</footer>
+</body>
+</html>

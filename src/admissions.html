@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admissions – CS Department COMSATS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#0a1628; --blue:#1a3a6e; --gold:#c9a84c; --gold-light:#f0d080; --cream:#faf8f3; --gray:#6b7280; --white:#ffffff; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--navy); }
+    nav { background:var(--navy); display:flex; align-items:center; justify-content:space-between; padding:0 5%; height:70px; position:sticky; top:0; z-index:100; box-shadow:0 2px 20px rgba(0,0,0,0.4); }
+    .logo { font-family:'Playfair Display',serif; color:var(--gold); font-size:1.3rem; letter-spacing:1px; }
+    .logo span { color:var(--white); font-size:0.8rem; display:block; font-family:'DM Sans',sans-serif; letter-spacing:2px; text-transform:uppercase; font-weight:300; }
+    nav ul { list-style:none; display:flex; gap:2rem; }
+    nav ul a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:0.9rem; transition:color 0.2s; }
+    nav ul a:hover, nav ul a.active { color:var(--gold); }
+
+    .page-header { background:linear-gradient(135deg,var(--navy),var(--blue)); color:white; padding:70px 5% 60px; }
+    .page-header p.tag { color:var(--gold); font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:0.8rem; }
+    .page-header h1 { font-family:'Playfair Display',serif; font-size:2.8rem; margin-bottom:1rem; }
+    .page-header p.sub { color:rgba(255,255,255,0.7); max-width:520px; line-height:1.7; }
+
+    section { padding:70px 5%; }
+
+    /* PROGRAMS */
+    .programs { background:var(--white); }
+    .section-tag { color:var(--gold); font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:0.7rem; font-weight:500; }
+    .section-title { font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:0.8rem; }
+    .section-sub { color:var(--gray); line-height:1.7; margin-bottom:2.5rem; max-width:580px; }
+    .program-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; }
+    .program-card { border:2px solid #e8e4da; border-radius:8px; padding:2rem; transition:border-color 0.2s,box-shadow 0.2s; }
+    .program-card:hover { border-color:var(--gold); box-shadow:0 6px 24px rgba(10,22,40,0.1); }
+    .program-card.featured { border-color:var(--gold); background:#fdf9ee; }
+    .prog-badge { display:inline-block; background:var(--navy); color:var(--gold); padding:0.3rem 0.9rem; border-radius:4px; font-size:0.75rem; letter-spacing:1px; text-transform:uppercase; font-weight:500; margin-bottom:1rem; }
+    .program-card h3 { font-size:1.15rem; margin-bottom:0.5rem; }
+    .program-card .detail { color:var(--gray); font-size:0.88rem; margin-bottom:0.3rem; }
+    .program-card .detail strong { color:var(--navy); }
+
+    /* CRITERIA */
+    .criteria { background:var(--cream); }
+    .criteria-grid { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; }
+    .criteria-box { background:var(--white); border-radius:8px; padding:2rem; border:1px solid #e8e4da; }
+    .criteria-box h3 { font-size:1.1rem; margin-bottom:1.2rem; padding-bottom:0.8rem; border-bottom:2px solid var(--gold); }
+    .crit-item { display:flex; gap:1rem; margin-bottom:1rem; align-items:flex-start; }
+    .crit-icon { width:32px; height:32px; background:var(--navy); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
+    .crit-text h4 { font-size:0.92rem; margin-bottom:0.2rem; }
+    .crit-text p { color:var(--gray); font-size:0.85rem; line-height:1.5; }
+
+    /* STEPS */
+    .steps { background:var(--navy); color:white; }
+    .steps .section-title { color:white; }
+    .steps .section-sub { color:rgba(255,255,255,0.6); }
+    .steps-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:0; }
+    .step { padding:2rem; position:relative; }
+    .step::after { content:''; position:absolute; top:2.5rem; right:0; width:1px; height:40px; background:rgba(201,168,76,0.3); }
+    .step:last-child::after { display:none; }
+    .step-num { font-family:'Playfair Display',serif; font-size:3rem; color:rgba(201,168,76,0.25); line-height:1; margin-bottom:0.5rem; }
+    .step h4 { color:var(--gold); font-size:0.95rem; margin-bottom:0.5rem; }
+    .step p { color:rgba(255,255,255,0.6); font-size:0.87rem; line-height:1.6; }
+
+    /* DEADLINES */
+    .deadlines { background:var(--white); }
+    .deadline-table { width:100%; border-collapse:collapse; border-radius:8px; overflow:hidden; box-shadow:0 2px 12px rgba(10,22,40,0.08); }
+    .deadline-table thead { background:var(--navy); color:white; }
+    .deadline-table th { padding:1rem 1.2rem; text-align:left; font-size:0.8rem; letter-spacing:1px; text-transform:uppercase; font-weight:500; }
+    .deadline-table td { padding:1rem 1.2rem; border-bottom:1px solid #f0ece0; font-size:0.92rem; }
+    .deadline-table tr:last-child td { border-bottom:none; }
+    .deadline-table tr:hover td { background:#fdf9ee; }
+    .status { display:inline-block; padding:0.25rem 0.75rem; border-radius:20px; font-size:0.78rem; font-weight:500; }
+    .status.open { background:#d4edda; color:#155724; }
+    .status.upcoming { background:#fff3cd; color:#856404; }
+    .status.closed { background:#f8d7da; color:#721c24; }
+    .apply-btn { display:inline-block; background:var(--gold); color:var(--navy); padding:0.9rem 2.5rem; border-radius:4px; text-decoration:none; font-weight:500; font-size:1rem; margin-top:2rem; transition:background 0.2s; }
+    .apply-btn:hover { background:var(--gold-light); }
+
+    footer { background:#060d1a; color:rgba(255,255,255,0.5); padding:2.5rem 5%; text-align:center; font-size:0.85rem; }
+    footer a { color:var(--gold); text-decoration:none; }
+    @media(max-width:768px){ .criteria-grid { grid-template-columns:1fr; } nav ul { gap:1rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">CS Department <span>COMSATS University Islamabad</span></div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="faculty.html">Faculty</a></li>
+    <li><a href="admissions.html" class="active">Admissions</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="tag">Join Our Department</p>
+  <h1>Admissions</h1>
+  <p class="sub">Start your journey in computer science with us. We offer rigorous, industry-relevant degree programs with a culture of research and innovation.</p>
+</div>
+
+<section class="programs">
+  <p class="section-tag">Degree Programs</p>
+  <h2 class="section-title">Choose Your Path</h2>
+  <p class="section-sub">We offer undergraduate and graduate programs designed to equip you with skills for today's technology landscape.</p>
+  <div class="program-grid">
+    <div class="program-card featured">
+      <div class="prog-badge">Undergraduate</div>
+      <h3>BS Computer Science</h3>
+      <p class="detail"><strong>Duration:</strong> 4 Years (8 Semesters)</p>
+      <p class="detail"><strong>Credit Hours:</strong> 130</p>
+      <p class="detail"><strong>Intake:</strong> Fall & Spring</p>
+      <p class="detail"><strong>Seats:</strong> 120 per intake</p>
+      <p class="detail" style="margin-top:0.8rem;color:var(--gray);font-size:0.88rem;">Comprehensive program covering software engineering, AI, networks, databases, and emerging technologies.</p>
+    </div>
+    <div class="program-card">
+      <div class="prog-badge">Graduate</div>
+      <h3>MS Computer Science</h3>
+      <p class="detail"><strong>Duration:</strong> 2 Years (4 Semesters)</p>
+      <p class="detail"><strong>Credit Hours:</strong> 30</p>
+      <p class="detail"><strong>Intake:</strong> Fall Only</p>
+      <p class="detail"><strong>Seats:</strong> 40 per intake</p>
+      <p class="detail" style="margin-top:0.8rem;color:var(--gray);font-size:0.88rem;">Research-focused or coursework track in AI, cloud computing, cybersecurity, or distributed systems.</p>
+    </div>
+    <div class="program-card">
+      <div class="prog-badge">Doctoral</div>
+      <h3>PhD Computer Science</h3>
+      <p class="detail"><strong>Duration:</strong> 3–5 Years</p>
+      <p class="detail"><strong>Credit Hours:</strong> 18 + Dissertation</p>
+      <p class="detail"><strong>Intake:</strong> Fall Only</p>
+      <p class="detail"><strong>Seats:</strong> 10 per intake</p>
+      <p class="detail" style="margin-top:0.8rem;color:var(--gray);font-size:0.88rem;">Advanced research program with full-time supervision by HEC-recognized PhD faculty.</p>
+    </div>
+  </div>
+</section>
+
+<section class="criteria">
+  <p class="section-tag">Eligibility</p>
+  <h2 class="section-title">Admission Criteria</h2>
+  <p class="section-sub">Meet the following academic requirements to be eligible for admission to our programs.</p>
+  <div class="criteria-grid">
+    <div class="criteria-box">
+      <h3>BS Computer Science</h3>
+      <div class="crit-item">
+        <div class="crit-icon">📋</div>
+        <div class="crit-text"><h4>Intermediate / A-Levels</h4><p>Minimum 50% marks in Intermediate with Pre-Engineering or Computer Science subjects from a recognized board.</p></div>
+      </div>
+      <div class="crit-item">
+        <div class="crit-icon">📐</div>
+        <div class="crit-text"><h4>Mathematics Required</h4><p>Mathematics as a compulsory subject at intermediate level is mandatory for the BS program.</p></div>
+      </div>
+      <div class="crit-item">
+        <div class="crit-icon">📝</div>
+        <div class="crit-text"><h4>Entry Test</h4><p>Valid NTS / COMSATS Aptitude Test score. Minimum 50% required. Tests held twice annually.</p></div>
+      </div>
+      <div class="crit-item">
+        <div class="crit-icon">🎯</div>
+        <div class="crit-text"><h4>Merit Criteria</h4><p>Merit = 50% Test + 25% Matric + 25% Intermediate. Final merit list published on official portal.</p></div>
+      </div>
+    </div>
+    <div class="criteria-box">
+      <h3>MS / PhD Computer Science</h3>
+      <div class="crit-item">
+        <div class="crit-icon">🎓</div>
+        <div class="crit-text"><h4>BS Degree (MS)</h4><p>Minimum CGPA 2.5/4.0 in BS Computer Science, IT, Software Engineering, or related field from HEC-recognized university.</p></div>
+      </div>
+      <div class="crit-item">
+        <div class="crit-icon">🎓</div>
+        <div class="crit-text"><h4>MS Degree (PhD)</h4><p>Minimum CGPA 3.0/4.0 in MS or 18-year education in relevant field. Research proposal required.</p></div>
+      </div>
+      <div class="crit-item">
+        <div class="crit-icon">📝</div>
+        <div class="crit-text"><h4>GAT Test</h4><p>Valid GAT (General) score of 50+ for MS. GAT (Subject) score of 60+ for PhD admission.</p></div>
+      </div>
+      <div class="crit-item">
+        <div class="crit-icon">🗣️</div>
+        <div class="crit-text"><h4>Interview</h4><p>Shortlisted candidates must appear for an in-person or online interview with the departmental committee.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="steps">
+  <p class="section-tag">Application Process</p>
+  <h2 class="section-title">How to Apply</h2>
+  <p class="section-sub">Follow these steps to complete your application for admission to COMSATS CS Department.</p>
+  <div class="steps-list">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h4>Register Online</h4>
+      <p>Create an account on the COMSATS admissions portal at admission.comsats.edu.pk</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h4>Fill Application Form</h4>
+      <p>Complete the online application form with academic history and personal information.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h4>Upload Documents</h4>
+      <p>Upload scanned copies of transcripts, ID, photos, and test score certificates.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h4>Pay Application Fee</h4>
+      <p>Pay Rs. 1,500 application fee via bank challan, JazzCash, or online banking.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <h4>Appear for Test</h4>
+      <p>Attend the departmental aptitude test or submit valid NTS/GAT score.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">06</div>
+      <h4>Check Merit List</h4>
+      <p>Merit lists are published on the portal. Selected students confirm enrollment and pay dues.</p>
+    </div>
+  </div>
+</section>
+
+<section class="deadlines">
+  <p class="section-tag">Important Dates</p>
+  <h2 class="section-title">Admission Deadlines 2025</h2>
+  <p class="section-sub">Keep track of key dates to ensure your application is submitted on time.</p>
+  <table class="deadline-table">
+    <thead><tr><th>Program</th><th>Intake</th><th>Application Deadline</th><th>Entry Test</th><th>Classes Begin</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>BS Computer Science</td><td>Fall 2025</td><td>August 10, 2025</td><td>August 20, 2025</td><td>September 1, 2025</td><td><span class="status open">Open</span></td></tr>
+      <tr><td>MS Computer Science</td><td>Fall 2025</td><td>July 25, 2025</td><td>GAT Required</td><td>September 1, 2025</td><td><span class="status open">Open</span></td></tr>
+      <tr><td>PhD Computer Science</td><td>Fall 2025</td><td>July 15, 2025</td><td>GAT (Subject)</td><td>September 1, 2025</td><td><span class="status upcoming">Closing Soon</span></td></tr>
+      <tr><td>BS Computer Science</td><td>Spring 2026</td><td>December 20, 2025</td><td>January 5, 2026</td><td>February 1, 2026</td><td><span class="status upcoming">Upcoming</span></td></tr>
+    </tbody>
+  </table>
+  <a href="contact.html" class="apply-btn">Contact Admissions Office →</a>
+</section>
+
+<footer>
+  <p>© 2025 Department of Computer Science, COMSATS University Islamabad – Lahore Campus</p>
+  <p style="margin-top:0.5rem;"><a href="contact.html">Contact Us</a> · <a href="courses.html">Courses</a> · <a href="faculty.html">Faculty</a></p>
+</footer>
+</body>
+</html>
