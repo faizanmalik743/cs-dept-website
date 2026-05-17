@@ -17,7 +17,7 @@ FROM nginx:1.25-alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy static site files
-COPY src/ /usr/share/nginx/html/
+COPY *.html /usr/share/nginx/html/
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
