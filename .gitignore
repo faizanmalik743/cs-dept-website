@@ -1,0 +1,20 @@
+# Node modules (for local linting)
+node_modules/
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+*.tar
+
+# Environment files (never commit secrets)
+.env
+.env.*
